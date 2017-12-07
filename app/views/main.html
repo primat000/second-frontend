@@ -1,23 +1,162 @@
-<div class="jumbotron">
-  <h1>Hello, world!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
+<div ng-show="!isLoggedIn">
+  <div class="jumbotron">
+    <h1>Hello, world!</h1>
+    <p class="lead">
+      <img src="images/yeoman.png" alt="I'm Yeoman"><br>
 
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#!/register">Зарегистрироваться <span class="glyphicon glyphicon-user"></span></a></p>
+    </p>
+    <p><a class="btn btn-lg btn-success" ng-href="#!/login">Зарегистрироваться <span class="glyphicon glyphicon-user"></span></a></p>
+  </div>
+
+  <div class="row marketing">
+    <h4>HTML5 Boilerplate</h4>
+    <p>
+      HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
+    </p>
+
+    <h4>Angular</h4>
+    <p>
+      AngularJS is a toolset for building the framework most suited to your application development.
+    </p>
+
+    <h4>Karma</h4>
+    <p>Spectacular Test Runner for JavaScript.</p>
+  </div>
 </div>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
+<div ng-show="isLoggedIn">
+  <div class="row">
+    <div class="col-md-2" style="min-height: 500px;">
+      <div class="row">
+        <div class="col-md-12">
+          <p>
+            <button class="btn btn-success list-group-item" data-toggle="collapse" data-target="#sprintForm" aria-expanded="false" aria-controls="collapseExample">
+              Добавить новый спринт
+            </button>
+          </p>
+          <div class="collapse" id="sprintForm">
+            <div class="card card-block">
+              <form>
+                <div class="form-group">
+                  <label for="timeStart">Дата начала</label>
+                  <input type="date" class="form-control" id="timeStart">
+                </div>
+                <div class="form-group">
+                  <label for="timeEnd">Дата окончания</label>
+                  <input type="date" class="form-control" id="timeEnd">
+                </div>
+                <button class="btn" type="submit">Поехали!</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <ul ng-repeat="sprint in sprints" class="list-group">
+            <button ng-click="setSprint(sprint)" class="list-group-item" ng-class="sprint.active ? 'active' : ''">{{sprint.name}}</button>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div ng-class="isDescriptionShowing ? 'col-md-6' : 'col-md-10'" style="min-height: 500px;">
+      <div class="row">
+        <div class="col-md-12">
+          <p>
+            <button class="btn btn-success list-group-item" data-toggle="collapse" data-target="#taskForm" aria-expanded="false" aria-controls="collapseExample">
+              Добавить новую задачу
+            </button>
+          </p>
+          <div class="collapse" id="taskForm">
+            <div class="card card-block">
+              <form class="form-inline">
+                <div class="form-group">
+                  <label for="taskName">Задача: </label>
+                  <input type="text" class="form-control" id="taskName">
+                </div>
+                <div class="form-group">
+                  <label for="assignee">Исполнитель: </label>
+                  <input type="date" class="form-control" id="assignee">
+                </div>
+                <button class="btn" type="submit">Поехали!</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="unknown" style="margin-bottom: 50px;">
+            <div ng-repeat="task in unknownTasks" class="table">
+              <div class="form-group row">
+                <div class="col-md-1" style="text-align: center; padding-top: 10px">
+                  <span class="glyphicon glyphicon-ok-circle"/>
+                </div>
+                <div class="col-md-11">
 
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
+                  <input value="{{task.name}}" type="text" class="form-control"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h2 style="text-align: center">Разработка</h2>
+          <div class="in-progress" style="margin-bottom: 50px;">
+            <div ng-repeat="task in inProgressTasks" class="table">
+              <div class="form-group row">
+                <div class="col-md-1" style="text-align: center; padding-top: 10px">
+                  <span class="glyphicon glyphicon-ok-circle"/>
+                </div>
+                <div class="col-md-11">
+                  <input value="{{task.name}}" type="text" class="form-control"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h2 style="text-align: center">Тестирование</h2>
+          <div class="testing" style="margin-bottom: 50px;">
+            <div ng-repeat="task in testingTasks" class="table">
+              <div class="form-group row">
+                <div class="col-md-1" style="text-align: center; padding-top: 10px">
+                  <span class="glyphicon glyphicon-ok-circle"/>
+                </div>
+                <div class="col-md-11">
+                  <input value="{{task.name}}" type="text" class="form-control"/>
+                </div>
+              </div>
 
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+              <div class="form-group row">
+                <div class="col-md-11">
+                  <button type="button" class="btn btn-primary btn-block" ng-href="/tasks/{{task.id}}">  Task with id : {{task.id}}</button>
+                </div>
+              </div>
+              <a href="#!/tasks/{{task.id}}">taskPage</a>
+
+            </div>
+          </div>
+          <hr>
+          <h2 style="text-align: center">Готово</h2>
+          <div class="ready" style="margin-bottom: 50px;">
+            <div ng-repeat="task in readyTasks" class="table">
+              <div class="form-group row">
+                <div class="col-md-1" style="text-align: center; padding-top: 10px">
+                  <span class="glyphicon glyphicon-ok-circle"/>
+                </div>
+                <div class="col-md-11">
+                  <input value="{{task.name}}" type="text" class="form-control"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr style="margin: 25px">
+    <div class="col-md-4" ng-show="isDescriptionShowing">
+      описание конкретной задачи
+    </div>
+  </div>
 </div>

@@ -1,0 +1,14 @@
+<div class="alert alert-danger" ng-show="loginError">
+    Проблема :(  Попробуйте ещё раз!
+</div>
+<form role="form" ng-submit="login()">
+    <div class="form-group">
+        <label for="username">Логин:</label> <input type="text"
+                                                       class="form-control" id="username" name="username" ng-model="username"/>
+    </div>
+    <div class="form-group">
+        <label for="password">Пароль:</label> <input type="password"
+                                                       class="form-control" id="password" name="password" ng-model="password"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Войти</button>
+</form>
