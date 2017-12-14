@@ -6,8 +6,21 @@
 
 
 angular.module('sprintFrontendApp')
-	.service('AuthService', ['$http', '$cookies', '$q',
-        function ($http, $cookies, $q) {
+	.service('AuthService', ['$http', '$cookies', '$q', '$rootScope',
+        function ($http, $cookies, $q, $rootScope) {
+            // this.getUserId = function(userName) {
+            //     return $http.get('http://localhost:9090/user?UserName=user')
+            //         .then((data) =>{
+            //             return data;
+            //         });
+            // };
+            //function getUserId (userName) {
+            //    $http.get('http://localhost:9090/user', { UserName: userName })
+            //        .then((data)=>  {
+            //            $rootScope.userId = data;
+            //        });
+            //};
+
 			this.authenticate = function(name, password, remember) {
 				if (!name || !password) {
 					return $q.reject();
@@ -38,8 +51,16 @@ angular.module('sprintFrontendApp')
 						} else {
 							return $q.reject();
 						}
-					});
+					}).then((data) =>{
+                        return $http.get('http://localhost:9090/user?UserName=' + data.data.name)
+                            .then((userId) => {
+                                return userId.data;
+                            });
+                    });
 			};
+
+
+
 
 			this.logout = function() {
 				removeRememberMeCookie();
@@ -50,6 +71,11 @@ angular.module('sprintFrontendApp')
 				let name = userdetials.data.principal.username;
 				let pwd = userdetials.data.principal.password;
 				let expireDate = new Date();
+                //getUserId (name);
+                //this.getUserId(name).then((data)=>{
+                //    $rootScope.userId = data;
+				//});
+
 				expireDate.setDate(expireDate.getDate() + 30);
 
 				let cookieValue = btoa(name

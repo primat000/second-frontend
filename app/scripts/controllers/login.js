@@ -11,7 +11,8 @@ angular.module('sprintFrontendApp').controller('LoginCtrl', ['$scope', '$rootSco
 			$scope.loginError = false;
 
 			$scope.login = function() {
-				AuthService.authenticate($scope.username, $scope.password, true).then(() => {
+				AuthService.authenticate($scope.username, $scope.password, true).then((data) => {
+                    $rootScope.userId = data;
 					$window.location = $rootScope.targetUrl ? $rootScope.targetUrl : "/";
 				}).catch(() => {
 					$scope.loginError = true;

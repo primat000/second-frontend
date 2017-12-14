@@ -39,6 +39,10 @@ angular
                 templateUrl: 'views/sprint.html',
                 controller: 'SprintCtrl',
             })
+            .when('/project',{
+                templateUrl: 'views/project.html',
+                controller: 'ProjectCtrl',
+            })
 			.otherwise({
 				redirectTo: '/'
 			})

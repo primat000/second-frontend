@@ -3,6 +3,10 @@ angular.module('sprintFrontendApp')
     .controller('SprintCtrl',['$rootScope','$scope','$routeParams','SprintsService','TasksService',
         function($rootScope,$scope,$routeParams,SprintsService,TasksService){
 
+            $scope.projects = [];
+            $scope.choisedProject = {};
+
+
             $scope.intervals = [
                 ['Move', 'Percentage'],
                 ["King's pawn (e4)", 44],
@@ -19,18 +23,31 @@ angular.module('sprintFrontendApp')
                 name: 'Спринт 3', active: false
             }];
 
-            SprintsService.loadSprints(1).then((sprints) => {
+
+            SprintsService.loadProject($rootScope.userId).then((projects) => {
+                $scope.projects = projects;
+            })
+
+            //$scope.choisedProject = $scope.projects[0];
+
+            SprintsService.loadSprints($scope.choisedProject).then((sprints) => {
                 $scope.sprints = sprints;
             });
+
+            $scope.selectChange = function(){
+                $scope.choisedProject = $scope.selectedProject;
+                SprintsService.loadSprints($scope.choisedProject.id).then((sprints) => {
+                    $scope.sprints = sprints;
+                });
+            };
 
             $scope.setSprint = function (sprint) {
                 for (let sprint of $scope.sprints) {
                     sprint.active = false;
                 }
-
                 sprint.active = true;
 
-                 SprintsService.loadBars(1).then((intervals)=>{
+                 SprintsService.loadBars(sprint.id,$rootScope.userId).then((intervals)=>{
                     $scope.intervals = intervals;
                 });
                 // SprintsService.loadIntervalFAKE(1).then((interval)=>{

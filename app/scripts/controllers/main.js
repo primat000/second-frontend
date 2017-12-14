@@ -12,6 +12,10 @@ angular.module('sprintFrontendApp')
 		function ($rootScope, $scope, $cookies, $window, AuthService, SprintsService, TasksService) {
 			$rootScope.isDescriptionShowing = false;
 			$rootScope.isLoggedIn = false;
+
+            $scope.projects = [];
+            $scope.choisedProject = {};
+
 			$scope.unknownTasks = [
 			];
 			$scope.inProgressTasks = [
@@ -33,9 +37,10 @@ angular.module('sprintFrontendApp')
 				name: 'Спринт 3', active: false
 			}];
 
-			SprintsService.loadSprints(1).then((sprints) => {
-				$scope.sprints = sprints;
-			});
+
+
+
+
 
 			$rootScope.logout = function() {
 				AuthService.logout().then(() => {
@@ -43,12 +48,25 @@ angular.module('sprintFrontendApp')
 				});
 			};
 
-			AuthService.getUserInfo().then(() => {
+			AuthService.getUserInfo().then((data) => {
 				$rootScope.isLoggedIn = true;
+				$rootScope.userId = data;
+                SprintsService.loadProject($rootScope.userId).then((projects) => {
+                    $scope.projects = projects;
+                });
 			}).catch(() => {
 				$rootScope.isLoggedIn = false;
 			});
 
+
+
+            $scope.selectChange = function() {
+                $scope.choisedProject = $scope.selectedProject;
+                SprintsService.loadSprints($scope.choisedProject.id).then((sprints) => {
+                    $scope.sprints = sprints;
+                });
+
+            };
 			$scope.setSprint = function (sprint) {
 				for (let sprint of $scope.sprints) {
 					sprint.active = false;

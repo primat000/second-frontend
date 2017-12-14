@@ -27,6 +27,13 @@
 <div ng-show="isLoggedIn">
   <div class="row">
     <div class="col-md-2" style="min-height: 500px;">
+      <form>
+        <div class="form-group">
+          <select class="form-control" id="sel1" ng-model="selectedProject" ng-options="x.description for x in projects"
+                  ng-change="selectChange()">
+          </select>
+        </div>
+      </form>
       <div class="row">
         <div class="col-md-12">
           <p>

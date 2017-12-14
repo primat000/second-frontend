@@ -21,8 +21,24 @@ angular.module('sprintFrontendApp')
 				});
 			};
 
-            this.loadBars = function () {
-                return $http.get('http://localhost:9090/Intervals?sprintId=1&userId=1'
+            this.loadProject = function (userId) {
+                //var pr = [
+                //    {name : "111", id : 1},
+                //    {name : "222", id : 2},
+                //    {name : "333", id : 3}
+                //];
+//
+                //return pr;
+                return $http.get('http://localhost:9090/projects?userId=' + userId)
+                    .then((data) => {
+                    const project = data.data;
+
+                    return project;
+                });
+            };
+
+            this.loadBars = function (sprintId,userId) {
+                return $http.get('http://localhost:9090/Intervals?sprintId=' + sprintId + '&userId=' + userId
 				).then((data) => {
                     const bars = data.data;
                     let resault = [['Task', 'Time in hour']];
