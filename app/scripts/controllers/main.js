@@ -12,9 +12,9 @@ angular.module('sprintFrontendApp')
 		function ($rootScope, $scope, $cookies, $window, AuthService, SprintsService, TasksService) {
 			$rootScope.isDescriptionShowing = false;
 			$rootScope.isLoggedIn = false;
-
-            $scope.projects = [];
-            $scope.choisedProject = {};
+      $rootScope.currentSprint = {};
+      $scope.projects = [];
+      $scope.choisedProject = {};
 
 			$scope.unknownTasks = [
 			];

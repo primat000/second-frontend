@@ -9,5 +9,8 @@ angular.module('sprintFrontendApp')
                     return data.data;
                 });
             };
+            this.createComment = function (taskId, commentBody) {
+                return $http.post('http://localhost:9090//tasks/'+taskId+'/comments', commentBody)
+            };
 
         }]);

@@ -64,5 +64,11 @@ angular.module('sprintFrontendApp')
                     ['Other', 3]
                 ];
 			};
+      this.createSprint = function (projectId, sprintBody) {
+        return $http.post('http://localhost:9090/sprints?projectId' + projectId, sprintBody);
+        //     .then((data) => {
+        //     const sprints = data.data;
+        // };
+      };
 		}]
 	);

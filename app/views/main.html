@@ -77,14 +77,18 @@
           </p>
           <div class="collapse" id="taskForm">
             <div class="card card-block">
-              <form class="form-inline">
+              <form class="form-inline" ng-submit="createTask()" ng-controller="TaskCtrl">
                 <div class="form-group">
                   <label for="taskName">Задача: </label>
-                  <input type="text" class="form-control" id="taskName">
+                  <input type="text" class="form-control" name="taskName" id="taskName"  ng-model="taskBody.name">
                 </div>
                 <div class="form-group">
                   <label for="assignee">Исполнитель: </label>
-                  <input type="date" class="form-control" id="assignee">
+                  <input type="text" class="form-control" name="assignee" id="assignee" ng-model="assignee">
+                </div>
+                <div class="form-group">
+                  <label for="taskDescription">Описание: </label>
+                  <input type="text" class="form-control" name="taskDescription" id="taskDescription" ng-model="taskBody.description">
                 </div>
                 <button class="btn" type="submit">Поехали!</button>
               </form>

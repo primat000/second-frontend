@@ -9,7 +9,7 @@
             </div>
         </form>
 
-        <div class="row">
+        <div class="row" >
             <div class="col-md-12">
                 <p>
                     <button class="btn btn-success list-group-item" data-toggle="collapse" data-target="#sprintForm" aria-expanded="false" aria-controls="collapseExample">
@@ -18,17 +18,30 @@
                 </p>
                 <div class="collapse" id="sprintForm">
                     <div class="card card-block">
-                        <form>
-                            <div class="form-group">
-                                <label for="timeStart">Дата начала</label>
-                                <input type="date" class="form-control" id="timeStart">
-                            </div>
-                            <div class="form-group">
-                                <label for="timeEnd">Дата окончания</label>
-                                <input type="date" class="form-control" id="timeEnd">
-                            </div>
-                            <button class="btn" type="submit">Поехали!</button>
-                        </form>
+                      <form class="form-inline" ng-submit="createSprint()" ng-controller="SprintCtrl">
+                        <div class="col-md-10">
+                          <label for="timeStart">Дата начала</label>
+                          <input type="date" class="form-control" id="timeStart" name = "sprintBody" ng-model="sprintBody.timeStart">
+                        </div>
+                        <div class="col-md-10">
+                          <label for="timeStart">Дата начала</label>
+                          <input type="date" class="form-control" id="timeEnd" name = "sprintBody" ng-model="sprintBody.timeEnd">
+                        </div>
+                        <div class="col-md-2">
+                          <button class="btn" type="submit">  Say </button>
+                        </div>
+                      </form>
+                        <!--<form class="form-inline" ng-submit="createSprint()" ng-controller="SprintCtrl">-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="timeStart">Дата начала</label>-->
+                                <!--<input type="date" class="form-control" id="timeStart" name = "sprintBody" ng-model="sprintBody.timeStart">-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="timeEnd">Дата окончания</label>-->
+                                <!--<input type="date" class="form-control" id="timeEnd" name = "sprintBody" ng-model="sprintBody.timeEnd">-->
+                            <!--</div>-->
+                            <!--<button class="btn" type="submit">Поехали!</button>-->
+                        <!--</form>-->
                     </div>
                 </div>
             </div>
