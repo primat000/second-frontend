@@ -79,6 +79,10 @@ angular.module('sprintFrontendApp')
                 };
 
             };
+            $scope.createSprint = function () {
+                SprintsService.createSprint(1, $scope.sprintBody);
+                // $window.location.reload();
+            };
 
 
 

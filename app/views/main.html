@@ -43,19 +43,21 @@
           </p>
           <div class="collapse" id="sprintForm">
             <div class="card card-block">
-              <form role="form" ng-submit="createSprint()">
-                <div class = "form-group" >
-              <label for="timeStart">Дата начала</label>
-              <input type="date" class="form-control" id="timeStart" name="timeStart" ng-model="timeStart">
+              <form class="form-inline" ng-submit="createSprint()" ng-controller="SprintCtrl">
+                <div class="col-md-10">
+                  <label for="timeStart">Дата начала</label>
+                  <input value="" type="date" class="form-control" name="sprintBody" id="timeStart"  ng-model="sprintBody.timeStart"/>
+                </div>
+                <div class="col-md-10">
+                  <label for="timeEnd">Дата конца</label>
+                  <input value="" type="date" class="form-control" name="sprintBody" id="timeEnd"  ng-model="sprintBody.timeEnd"/>
+                </div>
+                <div class="col-md-10">
+                  <button class="btn" type="submit">  Create </button>
+                </div>
+              </form>
             </div>
-            <div class="form-group">
-              <label for="timeEnd">Дата окончания</label>
-              <input type="date" class="form-control" id="timeEnd" name="timeEnd" ng-model="timeEnd">
-            </div>
-            <button class="btn" type="submit">Поехали!</button>
-            </form>
           </div>
-        </div>
       </div>
     </div>
     <hr>
@@ -77,14 +79,18 @@
         </p>
         <div class="collapse" id="taskForm">
           <div class="card card-block">
-            <form class="form-inline">
+            <form class="form-inline" ng-submit="createTask()" ng-controller="TaskCtrl">
               <div class="form-group">
                 <label for="taskName">Задача: </label>
-                <input type="text" class="form-control" id="taskName">
+                <input type="text" class="form-control" name="taskName" id="taskName"  ng-model="taskBody.name">
               </div>
               <div class="form-group">
                 <label for="assignee">Исполнитель: </label>
-                <input type="date" class="form-control" id="assignee">
+                <input type="text" class="form-control" name="assignee" id="assignee" ng-model="assignee">
+              </div>
+              <div class="form-group">
+                <label for="taskDescription">Описание: </label>
+                <input type="text" class="form-control" name="taskDescription" id="taskDescription" ng-model="taskBody.description">
               </div>
               <button class="btn" type="submit">Поехали!</button>
             </form>

@@ -17,6 +17,13 @@ angular.module('sprintFrontendApp')
             CommentService.getComments($scope.params.id).then((comments)=>{
                 $scope.comments = comments;
             });
+            $scope.createTask = function () {
+                TasksService.createTask($rootScope.currentSprint.id, $scope.assignee, $scope.taskBody);
+            };
+            $scope.createComment = function () {
+                CommentService.createComment($scope.params.id,$scope.commentBody);
+                console.log($scope.params.id,$scope.commentBody);
+            };
 
 
         }]);

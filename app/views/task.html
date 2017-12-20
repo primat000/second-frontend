@@ -20,22 +20,22 @@
     <div class="modal-body" style="padding:15px;">
         <h5>{{task.sprint.name}}</h5>
         <h4>Описание</h4>
-        <h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">Бла бла бла Описания у объекта нету))</h5>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>Название</th>
-                <th>Исполнитель</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
+        <!--<h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">Бла бла бла Описания у объекта нету))</h5>-->
+        <!--<table class="table table-hover">-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th>Название</th>-->
+                <!--<th>Исполнитель</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr>-->
+                <!--<td></td>-->
 
-                <td>Мистер</td>
-            </tr>
-            </tbody>
-        </table>
+                <!--<td>Мистер</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
 
         <h4>Коментарии</h4>
 
@@ -43,18 +43,20 @@
             <div class="form-group row" class="col-md-10">
                 <h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">{{comment.text}}</h5>
             </div>
-c
+<!--c-->
 
-        <h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла</h5>
-        <h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">Комментарий 2</h5>
-        <h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">Комментарий 3</h5>
+        <!--<h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла</h5>-->
+        <!--<h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">Комментарий 2</h5>-->
+        <!--<h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">Комментарий 3</h5>-->
     <div class="form-group row">
-        <div class="col-md-10">
-            <input value="{{task.name}}" type="text" class="form-control"/>
-        </div>
-        <div class="col-md-2">
-            <button type="button" class="btn btn-primary btn-block">  Say </button>
-        </div>
+        <form class="form-inline" ng-submit="createComment()" ng-controller="TaskCtrl">
+            <div class="col-md-10">
+                <input value="" type="text" class="form-control" name="commentBody" id="comment"  ng-model="commentBody.text"/>
+            </div>
+            <div class="col-md-2">
+                <button class="btn" type="submit">  Add comment </button>
+            </div>
+        </form>
     </div>
 
 </div>

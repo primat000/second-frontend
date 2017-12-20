@@ -22,23 +22,24 @@ angular.module('sprintFrontendApp')
 			$scope.unknownTasks = [
 			];
 			$scope.inProgressTasks = [
-				{ name: 'Сверстать основную страницу', assignee: 'Yana'},
-				{ name: 'Сделать регистрацию', assignee: 'Yana'}
+			// 	{ name: 'Сверстать основную страницу', assignee: 'Yana'},
+			// 	{ name: 'Сделать регистрацию', assignee: 'Yana'}
+			// ];
+			// $scope.testingTasks = [
+			// 	{ name: 'Логин', assignee: 'Yana'},
+             //    { name: 'Test', assignee: 'Vitaly', id:1}
+			// ];
+			// $scope.readyTasks = [
+			// 	{ name: 'Создать структуру проекта', assignee: 'Yana'}
+			// ];
+			// $scope.sprints = [{
+			// 	name: 'Спринт 1', active: true
+			// }, {
+			// 	name: 'Спринт 2', active: false
+			// }, {
+			// 	name: 'Спринт 3', active: false
+			// }
 			];
-			$scope.testingTasks = [
-				{ name: 'Логин', assignee: 'Yana'},
-                { name: 'Test', assignee: 'Vitaly', id:1}
-			];
-			$scope.readyTasks = [
-				{ name: 'Создать структуру проекта', assignee: 'Yana'}
-			];
-			$scope.sprints = [{
-				name: 'Спринт 1', active: true
-			}, {
-				name: 'Спринт 2', active: false
-			}, {
-				name: 'Спринт 3', active: false
-			}];
 
 
 

@@ -31,6 +31,9 @@ angular.module('sprintFrontendApp')
                     return task;
                 });
             };
+            this.createTask = function (sprintId, userName, taskBody) {
+                return $http.post('http://localhost:9090/tasks/?'+'sprintId='+sprintId+'&userName='+userName, taskBody)
+            };
 
 		}]
 	);
