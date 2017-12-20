@@ -8,37 +8,26 @@
  * Controller of the sprintFrontendApp
  */
 angular.module('sprintFrontendApp')
-	.controller('MainCtrl', ['$rootScope', '$scope', '$cookies', '$window', 'AuthService', 'SprintsService', 'TasksService',
-		function ($rootScope, $scope, $cookies, $window, AuthService, SprintsService, TasksService) {
+	.controller('MainCtrl', ['$rootScope', '$scope', '$cookies', '$window', 'AuthService', 'SprintsService', 'TasksService','CommentService',
+		function ($rootScope, $scope, $cookies, $window, AuthService, SprintsService, TasksService, CommentService) {
 			$rootScope.isDescriptionShowing = false;
 			$rootScope.isLoggedIn = false;
+            $rootScope.isSprintSelect = false;
+            $rootScope.choisedSprint = {};
 
             $scope.timeStart = '';
             $scope.timeEnd = '';
 
             $scope.projects = [];
             $scope.choisedProject = {};
+            $scope.choisedSprint = {};
+            $scope.choisedTask = {};
+            $scope.assignee = '';
+            // $scope.status = '';
 
 			$scope.unknownTasks = [
 			];
 			$scope.inProgressTasks = [
-			// 	{ name: 'Сверстать основную страницу', assignee: 'Yana'},
-			// 	{ name: 'Сделать регистрацию', assignee: 'Yana'}
-			// ];
-			// $scope.testingTasks = [
-			// 	{ name: 'Логин', assignee: 'Yana'},
-             //    { name: 'Test', assignee: 'Vitaly', id:1}
-			// ];
-			// $scope.readyTasks = [
-			// 	{ name: 'Создать структуру проекта', assignee: 'Yana'}
-			// ];
-			// $scope.sprints = [{
-			// 	name: 'Спринт 1', active: true
-			// }, {
-			// 	name: 'Спринт 2', active: false
-			// }, {
-			// 	name: 'Спринт 3', active: false
-			// }
 			];
 
 
@@ -68,16 +57,12 @@ angular.module('sprintFrontendApp')
                     timeEnd: $scope.timeEnd
 				};
             	$scope.choisedProject = $scope.selectedProject;
-                SprintsService.createSprint(sprint,$scope.choisedProject.id).then((data)=>{
+                SprintsService.createSprint($scope.choisedProject.id, sprint).then((data)=>{
                     SprintsService.loadSprints($scope.choisedProject.id).then((sprints) => {
                         $scope.sprints = sprints;
                     });
 				});
-
-
-
             };
-
 
             $scope.selectChange = function() {
                 $scope.choisedProject = $scope.selectedProject;
@@ -92,6 +77,9 @@ angular.module('sprintFrontendApp')
 				}
 
 				sprint.active = true;
+				$scope.choisedSprint = sprint;
+                $rootScope.choisedSprint = sprint;
+                $rootScope.isSprintSelect = true;
 
 				TasksService.getTasks(sprint.id, 'unknown').then((tasks) => {
 					$scope.unknownTasks = tasks;
@@ -109,4 +97,60 @@ angular.module('sprintFrontendApp')
 					$scope.readyTasks = tasks;
 				});
 			};
+            $scope.setTask = function (task) {
+                for (let task of $scope.inProgressTasks) {
+                    task.active = false;
+                }
+                for (let task of $scope.testingTasks) {
+                    task.active = false;
+                }
+                for (let task of $scope.readyTasks) {
+                    task.active = false;
+                }
+
+                task.active = true;
+                $scope.choisedTask = task;
+                CommentService.getComments($scope.choisedTask.id).then((comments)=>{
+                    $scope.comments = comments;
+                });
+            };
+
+            $scope.createTask = function () {
+                TasksService.createTask($rootScope.choisedSprint.id, $scope.assignee, $scope.taskBody).then(
+                    ()=>{
+                        TasksService.getTask($rootScope.choisedSprint.id).then((task ) => {
+                            $scope.task = task;
+                        });
+                    }
+                )
+            };
+            $scope.createComment = function () {
+                CommentService.createComment($scope.choisedTask.id, $scope.choisedTask.commentBody).then(() => {
+                    CommentService.getComments($scope.choisedTask.id).then((comments)=>{
+                        $scope.comments = comments;
+                        $scope.commentBody.text = "";
+                    });
+                })
+            };
+            $scope.changeStatus = function () {
+				console.log($scope.choisedTask.status);
+				TasksService.changeStatus($scope.choisedTask.id, $scope.choisedTask.status).then(() =>{
+                    TasksService.getTasks($scope.choisedSprint.id, 'unknown').then((tasks) => {
+                        $scope.unknownTasks = tasks;
+                    });
+
+                    TasksService.getTasks($scope.choisedSprint.id, 'inProgress').then((tasks) => {
+                        $scope.inProgressTasks = tasks;
+                    });
+
+                    TasksService.getTasks($scope.choisedSprint.id, 'testing').then((tasks) => {
+                        $scope.testingTasks = tasks;
+                    });
+
+                    TasksService.getTasks($scope.choisedSprint.id, 'ready').then((tasks) => {
+                        $scope.readyTasks = tasks;
+                    });
+				})
+            };
+
 		}]);

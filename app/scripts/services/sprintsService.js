@@ -44,7 +44,7 @@ angular.module('sprintFrontendApp')
             };
 
             this.loadBars = function (sprintId,userId) {
-                return $http.get('http://localhost:9090/Intervals?sprintId=' + sprintId + '&userId=' + userId
+                return $http.get('http://localhost:9090/sprints/graph?sprintId=' + sprintId + '&userId=' + userId
 				).then((data) => {
                     const bars = data.data;
                     let resault = [['Task', 'Time in hour']];

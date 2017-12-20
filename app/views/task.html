@@ -1,65 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
 
-<div class="modal-content">
-    <div class="modal-header">
-        <button class="close" type="button" data-dismiss="modal">x</button>
-        <h4>{{task.name}}</h4>
+    <div class="modal-content">
+        <div class="modal-header">
+            <button class="close" type="button" ng-href="#!/" ng-click="exit()">x</button>
+            <!--<button ng-click="closepopup()">cancel</button>-->
+            <h4>{{task.name}}</h4>
 
 
-        <!--
-        <a href="#" style="text-decoration:underline;margin:10px;margin-left:0px;" data-toggle="modal" data-target="#NewSubtask">Добавление подзадачи</a>
-        <a href="#" style="text-decoration:underline;margin:10px;margin-left:0px;" data-toggle="modal" data-target="#NewComment">Добавление комментария</a>
-        -->
+            <!--
+            <a href="#" style="text-decoration:underline;margin:10px;margin-left:0px;" data-toggle="modal" data-target="#NewSubtask">Добавление подзадачи</a>
+            <a href="#" style="text-decoration:underline;margin:10px;margin-left:0px;" data-toggle="modal" data-target="#NewComment">Добавление комментария</a>
+            -->
+        </div>
+        <div class="modal-body">
+            <h5>{{task.sprint.name}}</h5>
+            <h4>Описание</h4>
+            <h4>{{task.description}}</h4>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>{{task.description}}</th>
+                    <th>Исполнитель</th>
+                    <th>{{task.user.username}}</th>hd
+                </tr>
+                </thead>
+
+            </table>
+
+            <h4>Коментарии</h4>
+
+            <div ng-repeat="comment in comments">
+                <div class="col-xs-10">
+                    <h4>{{comment.user.username}}</h4>
+                    <p>{{comment.text}}</p>
+                    <br>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <form class="form-inline" ng-submit="createComment()">
+                    <div class="col-md-10">
+                        <input value="" type="text" class="form-control" name="commentBody" id="comment"  ng-model="commentBody.text"/>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn" type="submit">  Say </button>
+                    </div>
+                </form>
+                <!--<form class="form-inline" ng-submit="createComment()" ng-controller="TaskCtrl">-->
+                <!--<div class="form-group">-->
+                <!--<input type="text" class="form-control" name="commentBody" id="text"  ng-model="commentBody.text">-->
+                <!--</div>-->
+                <!--<button class="btn" type="submit">Поехали!</button>-->
+                <!--</form>-->
+            </div>
+        </div>
     </div>
-    <div class="modal-body" style="padding:15px;">
-        <h5>{{task.sprint.name}}</h5>
-        <h4>Описание</h4>
-        <!--<h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">Бла бла бла Описания у объекта нету))</h5>-->
-        <!--<table class="table table-hover">-->
-            <!--<thead>-->
-            <!--<tr>-->
-                <!--<th>Название</th>-->
-                <!--<th>Исполнитель</th>-->
-            <!--</tr>-->
-            <!--</thead>-->
-            <!--<tbody>-->
-            <!--<tr>-->
-                <!--<td></td>-->
-
-                <!--<td>Мистер</td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
-        <!--</table>-->
-
-        <h4>Коментарии</h4>
-
-        <div ng-repeat="comment in comments">
-            <div class="form-group row" class="col-md-10">
-                <h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">{{comment.text}}</h5>
-            </div>
-<!--c-->
-
-        <!--<h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла</h5>-->
-        <!--<h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">Комментарий 2</h5>-->
-        <!--<h5 style="padding-bottom:5px; border-bottom: 1px solid #e5e5e5;">Комментарий 3</h5>-->
-    <div class="form-group row">
-        <form class="form-inline" ng-submit="createComment()" ng-controller="TaskCtrl">
-            <div class="col-md-10">
-                <input value="" type="text" class="form-control" name="commentBody" id="comment"  ng-model="commentBody.text"/>
-            </div>
-            <div class="col-md-2">
-                <button class="btn" type="submit">  Add comment </button>
-            </div>
-        </form>
-    </div>
-
-</div>
-
-</body>
-</html>
+    </body>
+    </html>

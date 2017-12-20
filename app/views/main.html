@@ -29,6 +29,7 @@
     <div class="col-md-2" style="min-height: 500px;">
       <form>
         <div class="form-group">
+          <label for="sel1">Project</label>
           <select class="form-control" id="sel1" ng-model="selectedProject" ng-options="x.description for x in projects"
                   ng-change="selectChange()">
           </select>
@@ -43,7 +44,7 @@
           </p>
           <div class="collapse" id="sprintForm">
             <div class="card card-block">
-              <form class="form-inline" ng-submit="createSprint()" ng-controller="SprintCtrl">
+              <form class="form-inline" ng-submit="createSprint()">
                 <div class="col-md-10">
                   <label for="timeStart">Дата начала</label>
                   <input value="" type="date" class="form-control" name="sprintBody" id="timeStart"  ng-model="sprintBody.timeStart"/>
@@ -70,50 +71,40 @@
     </div>
   </div>
   <div ng-class="isDescriptionShowing ? 'col-md-6' : 'col-md-10'" style="min-height: 500px;">
-    <div class="row">
-      <div class="col-md-12">
-        <p>
-          <button class="btn btn-success list-group-item" data-toggle="collapse" data-target="#taskForm" aria-expanded="false" aria-controls="collapseExample">
-            Добавить новую задачу
-          </button>
-        </p>
-        <div class="collapse" id="taskForm">
-          <div class="card card-block">
-            <form class="form-inline" ng-submit="createTask()" ng-controller="TaskCtrl">
-              <div class="form-group">
-                <label for="taskName">Задача: </label>
-                <input type="text" class="form-control" name="taskName" id="taskName"  ng-model="taskBody.name">
-              </div>
-              <div class="form-group">
-                <label for="assignee">Исполнитель: </label>
-                <input type="text" class="form-control" name="assignee" id="assignee" ng-model="assignee">
-              </div>
-              <div class="form-group">
-                <label for="taskDescription">Описание: </label>
-                <input type="text" class="form-control" name="taskDescription" id="taskDescription" ng-model="taskBody.description">
-              </div>
-              <button class="btn" type="submit">Поехали!</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="unknown" style="margin-bottom: 50px;">
-          <div ng-repeat="task in unknownTasks" class="table">
-            <div class="form-group row">
-              <div class="col-md-1" style="text-align: center; padding-top: 10px">
-                <span class="glyphicon glyphicon-ok-circle"/>
-              </div>
-              <div class="col-md-11">
-
-                <input value="{{task.name}}" type="text" class="form-control"/>
+    <div ng-show="isSprintSelect">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <button class="btn btn-success list-group-item" data-toggle="collapse" data-target="#taskForm" aria-expanded="false" aria-controls="collapseExample">
+                  Добавить новую задачу
+                </button>
+              </p>
+              <div class="collapse" id="taskForm">
+                <div class="card card-block">
+                  <form class="form-inline" ng-submit="createTask()" ng-controller="TaskCtrl">
+                    <div class="form-group">
+                      <label for="taskName">Задача: </label>
+                      <input type="text" class="form-control" name="taskName" id="taskName"  ng-model="taskBody.name">
+                    </div>
+                    <div class="form-group">
+                      <label for="assignee">Исполнитель: </label>
+                      <select class="form-control" id="sel1" ng-model="selectedProject" ng-options="x.description for x in projects"
+                              ng-change="selectChange()">
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="taskDescription">Описание: </label>
+                      <input type="text" class="form-control" name="taskDescription" id="taskDescription" ng-model="taskBody.description">
+                    </div>
+                    <button class="btn" type="submit">Поехали!</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+    </div>
+    <hr>
+    <div class="row">
         <hr>
         <h2 style="text-align: center">Разработка</h2>
         <div class="in-progress" style="margin-bottom: 50px;">
@@ -123,7 +114,70 @@
                 <span class="glyphicon glyphicon-ok-circle"/>
               </div>
               <div class="col-md-11">
-                <input value="{{task.name}}" type="text" class="form-control"/>
+                <!--<button ng-click="setSprint(sprint)" class="list-group-item" ng-class="sprint.active ? 'active' : ''">{{sprint.name}}</button>-->
+                <!--<input value="{{task.user.username}}" type="text" class="form-control"/>-->
+                <button ng-click="setTask(task); show_me = !show_me" class="list-group-item" ng-class="task.active ? 'active' : ''">{{task.name}}</button>
+                <!--<button ng-click = "show_me = !show_me">Description</button>-->
+                <div class="check-element animate-show-hide" ng-show="show_me">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4>{{task.name}}</h4>
+                      <thead>
+                      <tr>
+                        <label>Выбрать статус:
+                          <select ng-model="task.status">
+                            <option id="progress" ng-selected="selected" value="inProgress">In progress</option>
+                            <option id="test" ng-selected="selected" value="testing">In Testing</option>
+                            <option id="ready" ng-selected="selected" value="ready">Ready</option>
+                          </select>
+                          <button ng-click="changeStatus()">Изменить</button>
+                      </tr>
+                      </thead>
+                      <h4></h4>
+                      <thead>
+                      <tr>
+                        <button>start</button>
+                        <button>stop</button>
+                        <th>Текущий интервал</th>
+                        <label>{{field.title}}<br />
+                          <output type="time" ng-model="field.value"/>
+                        </label>
+                      </tr>
+                      </thead>
+                    </div>
+                    <div class="modal-body">
+                      <h5>{{task.sprint.name}}</h5>
+                      <h4>Описание</h4>
+                      <h4>{{task.description}}</h4>
+                      <table class="table table-hover">
+                        <thead>
+                        <tr>
+                          <th>Исполнитель</th>
+                          <th>{{task.user.username}}</th>
+                        </tr>
+                        </thead>
+                      </table>
+                      <h4>Коментарии</h4>
+                      <div ng-repeat="comment in comments">
+                        <div class="col-xs-10">
+                          <h4>{{comment.user.username}}</h4>
+                          <p>{{comment.text}}</p>
+                          <br>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <form class="form-inline" ng-submit="createComment()">
+                          <div class="col-md-10">
+                            <input value="" type="text" class="form-control" name="commentBody" id="comment"  ng-model="task.commentBody.text"/>
+                          </div>
+                          <div class="col-md-2">
+                            <button class="btn" type="submit">  Say </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -137,16 +191,71 @@
                 <span class="glyphicon glyphicon-ok-circle"/>
               </div>
               <div class="col-md-11">
-                <input value="{{task.name}}" type="text" class="form-control"/>
+                <!--<input value="{{task.user.username}}" type="text" class="form-control"/>-->
+                <button ng-click="setTask(task); show_me = !show_me" class="list-group-item" ng-class="task.active ? 'active' : ''">{{task.name}}</button>
+                <!--<button ng-click = "show_me = !show_me">Description</button>-->
+                <div class="check-element animate-show-hide" ng-show="show_me">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4>{{task.name}}</h4>
+                      <thead>
+                      <tr>
+                        <label>Выбрать статус:
+                          <select ng-model="task.status">
+                            <option id="progress" ng-selected="selected" value="inProgress">In progress</option>
+                            <option id="test" ng-selected="selected" value="testing">In Testing</option>
+                            <option id="ready" ng-selected="selected" value="ready">Ready</option>
+                          </select>
+                          <button ng-click="changeStatus()">Изменить</button>
+                      </tr>
+                      </thead>
+                      <h4></h4>
+                      <thead>
+                      <tr>
+                        <button>start</button>
+                        <button>stop</button>
+                        <th>Текущий интервал</th>
+                        <label>{{field.title}}<br />
+                          <output type="time" ng-model="field.value"/>
+                        </label>
+                      </tr>
+                      </thead>
+                    </div>
+                    <div class="modal-body">
+                      <h5>{{task.sprint.name}}</h5>
+                      <h4>Описание</h4>
+                      <h4>{{task.description}}</h4>
+                      <table class="table table-hover">
+                        <thead>
+                        <tr>
+                          <th>Исполнитель</th>
+                          <th>{{task.user.username}}</th>
+                        </tr>
+                        </thead>
+                      </table>
+                      <h4>Коментарии</h4>
+                      <div ng-repeat="comment in comments">
+                        <div class="col-xs-10">
+                          <h4>{{comment.user.username}}</h4>
+                          <p>{{comment.text}}</p>
+                          <br>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <form class="form-inline" ng-submit="createComment()">
+                          <div class="col-md-10">
+                            <input value="" type="text" class="form-control" name="commentBody" id="comment"  ng-model="task.commentBody.text"/>
+                          </div>
+                          <div class="col-md-2">
+                            <button class="btn" type="submit">  Say </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-
-            <div class="form-group row">
-              <div class="col-md-11">
-                <button type="button" class="btn btn-primary btn-block" ng-href="/tasks/{{task.id}}">  Task with id : {{task.id}}</button>
-              </div>
-            </div>
-            <a href="#!/tasks/{{task.id}}">taskPage</a>
 
           </div>
         </div>
@@ -159,7 +268,58 @@
                 <span class="glyphicon glyphicon-ok-circle"/>
               </div>
               <div class="col-md-11">
-                <input value="{{task.name}}" type="text" class="form-control"/>
+                <!--<input value="{{task.user.username}}" type="text" class="form-control"/>-->
+                <button ng-click="setTask(task); show_me = !show_me" class="list-group-item" ng-class="task.active ? 'active' : ''">{{task.name}}</button>
+                <!--<button ng-click = "show_me = !show_me">Description</button>-->
+                <div class="check-element animate-show-hide" ng-show="show_me">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4>{{task.name}}</h4>
+                      <thead>
+                      <tr>
+                        <label>Выбрать статус:
+                          <select ng-model="task.status">
+                            <option id="progress" ng-selected="selected" value="inProgress">In progress</option>
+                            <option id="test" ng-selected="selected" value="testing">In Testing</option>
+                            <option id="ready" ng-selected="selected" value="ready">Ready</option>
+                          </select>
+                          <button ng-click="changeStatus()">Изменить</button>
+                      </tr>
+                      </thead>
+                    </div>
+                    <div class="modal-body">
+                      <h5>{{task.sprint.name}}</h5>
+                      <h4>Описание</h4>
+                      <h4>{{task.description}}</h4>
+                      <table class="table table-hover">
+                        <thead>
+                        <tr>
+                          <th>Исполнитель</th>
+                          <th>{{task.user.username}}</th>
+                        </tr>
+                        </thead>
+                      </table>
+                      <h4>Коментарии</h4>
+                      <div ng-repeat="comment in comments">
+                        <div class="col-xs-10">
+                          <h4>{{comment.user.username}}</h4>
+                          <p>{{comment.text}}</p>
+                          <br>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <form class="form-inline" ng-submit="createComment()">
+                          <div class="col-md-10">
+                            <input value="" type="text" class="form-control" name="commentBody" id="comment"  ng-model="task.commentBody.text"/>
+                          </div>
+                          <div class="col-md-2">
+                            <button class="btn" type="submit">  Say </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -168,9 +328,6 @@
     </div>
   </div>
   <hr style="margin: 25px">
-  <div class="col-md-4" ng-show="isDescriptionShowing">
-    описание конкретной задачи
-  </div>
 </div>
 </div>
 

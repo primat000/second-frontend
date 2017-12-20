@@ -34,6 +34,9 @@ angular.module('sprintFrontendApp')
             this.createTask = function (sprintId, userName, taskBody) {
                 return $http.post('http://localhost:9090/tasks/?'+'sprintId='+sprintId+'&userName='+userName, taskBody)
             };
+            this.changeStatus = function (taskId, status) {
+                return $http.put('http://localhost:9090/tasks/'+taskId+'?status='+status, {})
+            };
 
 		}]
 	);
