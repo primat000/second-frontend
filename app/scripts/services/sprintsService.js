@@ -21,6 +21,12 @@ angular.module('sprintFrontendApp')
 				});
 			};
 
+            this.createSprint = function (sprint,projectId) {
+                return $http.post('http://localhost:9090/sprints?projectId='+projectId,sprint)
+                    .then((data) => {
+                    });
+            };
+
             this.loadProject = function (userId) {
                 //var pr = [
                 //    {name : "111", id : 1},

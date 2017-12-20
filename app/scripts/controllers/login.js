@@ -3,8 +3,8 @@
  */
 'use strict';
 
-angular.module('sprintFrontendApp').controller('LoginCtrl', ['$scope', '$rootScope', '$window', 'AuthService',
-		function ($scope, $rootScope, $window, AuthService) {
+angular.module('sprintFrontendApp').controller('LoginCtrl', ['$scope', '$rootScope', '$window', 'AuthService', '$location',
+		function ($scope, $rootScope, $window, AuthService,$location) {
 			$scope.username = '';
 			$scope.password = '';
 			$scope.remember = false;
@@ -13,6 +13,7 @@ angular.module('sprintFrontendApp').controller('LoginCtrl', ['$scope', '$rootSco
 			$scope.login = function() {
 				AuthService.authenticate($scope.username, $scope.password, true).then((data) => {
                     $rootScope.userId = data;
+                    //$location.path( '/main' );
 					$window.location = $rootScope.targetUrl ? $rootScope.targetUrl : "/";
 				}).catch(() => {
 					$scope.loginError = true;

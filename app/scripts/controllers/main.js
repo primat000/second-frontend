@@ -13,6 +13,9 @@ angular.module('sprintFrontendApp')
 			$rootScope.isDescriptionShowing = false;
 			$rootScope.isLoggedIn = false;
 
+            $scope.timeStart = '';
+            $scope.timeEnd = '';
+
             $scope.projects = [];
             $scope.choisedProject = {};
 
@@ -58,6 +61,21 @@ angular.module('sprintFrontendApp')
 				$rootScope.isLoggedIn = false;
 			});
 
+            $scope.createSprint = function() {
+            	var sprint = {
+                    timeStart: $scope.timeStart,
+                    timeEnd: $scope.timeEnd
+				};
+            	$scope.choisedProject = $scope.selectedProject;
+                SprintsService.createSprint(sprint,$scope.choisedProject.id).then((data)=>{
+                    SprintsService.loadSprints($scope.choisedProject.id).then((sprints) => {
+                        $scope.sprints = sprints;
+                    });
+				});
+
+
+
+            };
 
 
             $scope.selectChange = function() {
@@ -89,5 +107,5 @@ angular.module('sprintFrontendApp')
 				TasksService.getTasks(sprint.id, 'ready').then((tasks) => {
 					$scope.readyTasks = tasks;
 				});
-			}
+			};
 		}]);

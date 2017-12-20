@@ -21,6 +21,16 @@ angular.module('sprintFrontendApp')
             //        });
             //};
 
+			this.registration = function(user){
+				$http.post('http://localhost:9090/user/',user).then((data)=>{
+                    if (data.data) {
+
+                    } else {
+                    	var x = 1245235;
+                    }
+				});
+			};
+
 			this.authenticate = function(name, password, remember) {
 				if (!name || !password) {
 					return $q.reject();
