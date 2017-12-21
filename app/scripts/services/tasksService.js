@@ -31,11 +31,27 @@ angular.module('sprintFrontendApp')
                     return task;
                 });
             };
+            this.getTaskInfo = function (Id) {
+                return $http.get('http://localhost:9090/tasks/' + Id).then((taskInfo) => {
+                    return taskInfo;
+				})
+            };
             this.createTask = function (sprintId, userName, taskBody) {
                 return $http.post('http://localhost:9090/tasks/?'+'sprintId='+sprintId+'&userName='+userName, taskBody)
             };
             this.changeStatus = function (taskId, status) {
-                return $http.put('http://localhost:9090/tasks/'+taskId+'?status='+status, {})
+                return $http.put('http://localhost:9090/tasks/'+taskId+'?status='+status, {});
+            };
+            this.getUsersInProject = function(projectId){
+                return $http.get('http://localhost:9090/users/projects/'+ projectId).then((data)=> {
+                    return data.data;
+                });
+            };
+            this.stopTask = function(taskId, username){
+                return $http.put('http://localhost:9090/tasks/'+taskId+'/intervals?userName='+username,{});
+            };
+            this.startTask = function(taskId, username){
+                return $http.post('http://localhost:9090/tasks/'+taskId+'/intervals?userName='+username,{});
             };
 
 		}]

@@ -17,23 +17,20 @@ angular.module('sprintFrontendApp')
 
             $scope.timeStart = '';
             $scope.timeEnd = '';
+            $scope.users = [];
+            $scope.userIsSendingTask = '';
 
             $scope.projects = [];
             $scope.choisedProject = {};
             $scope.choisedSprint = {};
             $scope.choisedTask = {};
             $scope.assignee = '';
-            // $scope.status = '';
+            $scope.taskAction = '';
 
 			$scope.unknownTasks = [
 			];
 			$scope.inProgressTasks = [
 			];
-
-
-
-
-
 
 			$rootScope.logout = function() {
 				AuthService.logout().then(() => {
@@ -66,6 +63,9 @@ angular.module('sprintFrontendApp')
 
             $scope.selectChange = function() {
                 $scope.choisedProject = $scope.selectedProject;
+                TasksService.getUsersInProject($scope.choisedProject.id).then((users) => {
+                    $scope.users = users;
+                });
                 SprintsService.loadSprints($scope.choisedProject.id).then((sprints) => {
                     $scope.sprints = sprints;
                 });
@@ -80,11 +80,6 @@ angular.module('sprintFrontendApp')
 				$scope.choisedSprint = sprint;
                 $rootScope.choisedSprint = sprint;
                 $rootScope.isSprintSelect = true;
-
-				TasksService.getTasks(sprint.id, 'unknown').then((tasks) => {
-					$scope.unknownTasks = tasks;
-				});
-
 				TasksService.getTasks(sprint.id, 'inProgress').then((tasks) => {
 					$scope.inProgressTasks = tasks;
 				});
@@ -113,17 +108,41 @@ angular.module('sprintFrontendApp')
                 CommentService.getComments($scope.choisedTask.id).then((comments)=>{
                     $scope.comments = comments;
                 });
+                TasksService.getTaskInfo($scope.choisedTask.id).then((taskInfo) => {
+                	if(taskInfo.data.action === 'Stop') $scope.taskAction = 'Start'
+						else  $scope.taskAction = 'Stop';
+
+				});
             };
 
             $scope.createTask = function () {
-                TasksService.createTask($rootScope.choisedSprint.id, $scope.assignee, $scope.taskBody).then(
+                TasksService.createTask($rootScope.choisedSprint.id, $scope.userIsSendingTask.username, $scope.taskBody).then(
                     ()=>{
-                        TasksService.getTask($rootScope.choisedSprint.id).then((task ) => {
-                            $scope.task = task;
+                        TasksService.getTasks($rootScope.choisedSprint.id, 'inProgress').then((tasks) => {
+                            $scope.inProgressTasks = tasks;
+                        });
+
+                        TasksService.getTasks($rootScope.choisedSprint.id, 'testing').then((tasks) => {
+                            $scope.testingTasks = tasks;
+                        });
+
+                        TasksService.getTasks($rootScope.choisedSprint.id, 'ready').then((tasks) => {
+                            $scope.readyTasks = tasks;
                         });
                     }
                 )
             };
+            $scope.changeStopStartToTask = function () {
+            	if ($scope.taskAction === 'Stop') {
+            		TasksService.stopTask($scope.choisedTask.id).then(()=>{
+                        $scope.taskAction = 'Start';
+                    })
+
+                }
+				else TasksService.startTask($scope.choisedTask.id).then(()=>{
+                    $scope.taskAction = 'Stop';
+                })
+			};
             $scope.createComment = function () {
                 CommentService.createComment($scope.choisedTask.id, $scope.choisedTask.commentBody).then(() => {
                     CommentService.getComments($scope.choisedTask.id).then((comments)=>{

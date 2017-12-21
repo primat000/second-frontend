@@ -18,7 +18,7 @@ angular.module('sprintFrontendApp')
                 $scope.comments = comments;
             });
             $scope.createTask = function () {
-                TasksService.createTask($rootScope.choisedSprint.id, $scope.assignee, $scope.taskBody).then(
+                TasksService.createTask($rootScope.choisedSprint.id, $scope.userIsSendingTask.username, $scope.taskBody).then(
                     ()=>{
                         TasksService.getTask($scope.params.id).then((task ) => {
                             $scope.task = task;

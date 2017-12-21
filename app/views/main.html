@@ -5,7 +5,7 @@
       <img src="images/yeoman.png" alt="I'm Yeoman"><br>
 
     </p>
-    <p><a class="btn btn-lg btn-success" ng-href="#!/login">Зарегистрироваться <span class="glyphicon glyphicon-user"></span></a></p>
+    <p><a class="btn btn-lg btn-success" ng-href="#!/login">Войти <span class="glyphicon glyphicon-user"></span></a></p>
   </div>
 
   <div class="row marketing">
@@ -81,22 +81,20 @@
               </p>
               <div class="collapse" id="taskForm">
                 <div class="card card-block">
-                  <form class="form-inline" ng-submit="createTask()" ng-controller="TaskCtrl">
+                  <form class="form-inline" ng-submit="createTask()">
                     <div class="form-group">
                       <label for="taskName">Задача: </label>
                       <input type="text" class="form-control" name="taskName" id="taskName"  ng-model="taskBody.name">
                     </div>
                     <div class="form-group">
                       <label for="assignee">Исполнитель: </label>
-                      <select class="form-control" id="sel1" ng-model="selectedProject" ng-options="x.description for x in projects"
-                              ng-change="selectChange()">
-                      </select>
+                      <select class="form-control" id="sel1" ng-model="userIsSendingTask" ng-options="x.username for x in users"></select>
                     </div>
                     <div class="form-group">
                       <label for="taskDescription">Описание: </label>
                       <input type="text" class="form-control" name="taskDescription" id="taskDescription" ng-model="taskBody.description">
                     </div>
-                    <button class="btn" type="submit">Поехали!</button>
+                    <button class="btn" type="submit">Добавить</button>
                   </form>
                 </div>
               </div>
@@ -136,9 +134,9 @@
                       <h4></h4>
                       <thead>
                       <tr>
-                        <button>start</button>
-                        <button>stop</button>
-                        <th>Текущий интервал</th>
+                        <!--<button>start</button>-->
+                        <button ng-click="changeStopStartToTask()">{{taskAction}} Task</button>
+                        <!--<th>Текущий интервал</th>-->
                         <label>{{field.title}}<br />
                           <output type="time" ng-model="field.value"/>
                         </label>
@@ -212,9 +210,9 @@
                       <h4></h4>
                       <thead>
                       <tr>
-                        <button>start</button>
-                        <button>stop</button>
-                        <th>Текущий интервал</th>
+                        <button ng-click="changeStopStartToTask()">{{taskAction}} Task</button>
+                        <!--<button>stop</button>-->
+                        <!--<th>Текущий интервал</th>-->
                         <label>{{field.title}}<br />
                           <output type="time" ng-model="field.value"/>
                         </label>
