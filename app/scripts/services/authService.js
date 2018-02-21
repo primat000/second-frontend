@@ -7,20 +7,7 @@
 
 angular.module('sprintFrontendApp')
 	.service('AuthService', ['$http', '$cookies', '$q', '$rootScope',
-        function ($http, $cookies, $q, $rootScope) {
-            // this.getUserId = function(userName) {
-            //     return $http.get('http://localhost:9090/user?UserName=user')
-            //         .then((data) =>{
-            //             return data;
-            //         });
-            // };
-            //function getUserId (userName) {
-            //    $http.get('http://localhost:9090/user', { UserName: userName })
-            //        .then((data)=>  {
-            //            $rootScope.userId = data;
-            //        });
-            //};
-
+        function ($http, $cookies, $q) {
 			this.registration = function(user){
 				$http.post('http://localhost:9090/user/',user).then((data)=>{
                     if (data.data) {
@@ -81,11 +68,6 @@ angular.module('sprintFrontendApp')
 				let name = userdetials.data.principal.username;
 				let pwd = userdetials.data.principal.password;
 				let expireDate = new Date();
-                //getUserId (name);
-                //this.getUserId(name).then((data)=>{
-                //    $rootScope.userId = data;
-				//});
-
 				expireDate.setDate(expireDate.getDate() + 30);
 
 				let cookieValue = btoa(name

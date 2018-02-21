@@ -8,20 +8,22 @@ angular.module('sprintFrontendApp')
 
 
             $scope.intervals = [
-                ['Move', 'Percentage'],
-                ["King's pawn (e4)", 44],
-                ["Queen's pawn (d4)", 31],
-                ["Knight to King 3 (Nf3)", 12],
-                ["Queen's bishop pawn (c4)", 10],
-                ['Other', 3]
+                // ['Move', 'Percentage'],
+                // ["King's pawn (e4)", 44],
+                // ["Queen's pawn (d4)", 31],
+                // ["Knight to King 3 (Nf3)", 12],
+                // ["Queen's bishop pawn (c4)", 10],
+                // ['Other', 3]
             ];
-            $scope.sprints = [{
-                name: 'Спринт 1', active: true
-            }, {
-                name: 'Спринт 2', active: false
-            }, {
-                name: 'Спринт 3', active: false
-            }];
+            $scope.sprints = [
+            //     {
+            //     name: 'Спринт 1', active: true
+            // }, {
+            //     name: 'Спринт 2', active: false
+            // }, {
+            //     name: 'Спринт 3', active: false
+            // }
+            ];
 
 
             SprintsService.loadProject($rootScope.userId).then((projects) => {
@@ -63,11 +65,11 @@ angular.module('sprintFrontendApp')
                         width: 800,
                         legend: { position: 'none' },
                         chart: {
-                            title: 'Chess opening moves',
-                            subtitle: 'popularity by percentage' },
+                            title: 'Tasks in sprint',
+                            subtitle: '' },
                         axes: {
                             x: {
-                                0: { side: 'top', label: 'White to move'} // Top x-axis.
+                                0: { side: 'top', label: 'tasks'} // Top x-axis.
                             }
                         },
                         bar: { groupWidth: "90%" }
@@ -79,11 +81,5 @@ angular.module('sprintFrontendApp')
                 };
 
             };
-            $scope.createSprint = function () {
-                SprintsService.createSprint(1, $scope.sprintBody);
-                // $window.location.reload();
-            };
-
-
 
         }]);

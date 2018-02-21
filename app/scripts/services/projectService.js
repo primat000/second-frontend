@@ -29,9 +29,19 @@ angular.module('sprintFrontendApp')
         };
 
         this.accept = function(projectId){
-            return $http.post('http://localhost:9090//acceptinvitation?userId='+ $rootScope.userId+ '&projectId='+ projectId).then((data)=> {
+            return $http.post('http://localhost:9090//acceptinvitation?userId=' +
+                $rootScope.userId +
+                '&projectId=' +
+                projectId
+            ).then((data)=> {
                 return data.data;
             });
         };
+        this.deny = function(projectId){
+            return $http.delete('http://localhost:9090/denyInvitation?projectId='+ projectId).then((data)=> {
+                return data.data;
+            });
+        };
+
 
     }]);

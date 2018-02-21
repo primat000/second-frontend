@@ -52,6 +52,17 @@ angular.module('sprintFrontendApp')
                 });
             });
         };
+            $scope.deny = function(userId, projectId){
+                ProjectService.deny(userId, projectId).then((data)=>{
+                    ProjectService.LoadProjects(userId).then((data1)=> {
+                        $scope.projects = data1;
+                    });
+                    ProjectService.LoadInvitations(userId).then((data2)=> {
+                        $scope.invetations = data2;
+                    });
+                });
+            };
+
 
         $scope.selectChange = function(){
                 $scope.choisedProject = $scope.selectedProject;

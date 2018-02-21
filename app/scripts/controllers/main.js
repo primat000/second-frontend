@@ -49,9 +49,13 @@ angular.module('sprintFrontendApp')
 			});
 
             $scope.createSprint = function() {
+                var tmStart = $scope.timeStart;
+                tmStart.setDate(tmStart.getDate() + 2);
+                var tmEnd = $scope.timeEnd;
+                tmEnd.setDate(tmEnd.getDate() + 2);
             	var sprint = {
-                    timeStart: $scope.timeStart,
-                    timeEnd: $scope.timeEnd
+                    timeStart: tmStart,
+                    timeEnd: tmEnd
 				};
             	$scope.choisedProject = $scope.selectedProject;
                 SprintsService.createSprint($scope.choisedProject.id, sprint).then((data)=>{
